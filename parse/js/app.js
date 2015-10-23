@@ -8,6 +8,14 @@ Parse.initialize("Y0vfUaDWISBHAfJpx0aBsL3mCgnALYMyQMFDUQW2", "oEVU0q7HbmSjiMc2KQ
 $(function() {
     'use strict';
 
+
+/* Question
+    a. html
+    b.underlines = ?
+
+*/
+
+
     // 1. Create a new variable that is a class, and pass a String that is the name of the class
     var Task = Parse.Object.extend('Task');
     // 2. Query can get multiple objects at the same time
@@ -15,7 +23,7 @@ $(function() {
     var tasksQuery = new Parse.Query(Task);
     // 3.id + createdAt + last modified value --> new query that will retrun all tasks ordered by createAt
     tasksQuery.ascending('createdAt');
-
+    tasksQuery.notEqualTo('done', true);
     // 4. Reference to the task list element
     var tasksList = $('#tasks-list');
 
@@ -25,13 +33,15 @@ $(function() {
     // current set of tasks
     var tasks = [];
 
+    //
+
     // 5.
     function displayError(err) {
         errorMessage.text(err.message);
         errorMessage.fadeIn();
     }
 
-    function clearErrpr() {
+    function clearError() {
         errorMessage.hide();
     }
 
@@ -58,11 +68,34 @@ $(function() {
     function renderTasks () {
         tasksList.empty();
         tasks.forEach(function(task){
-            $(document.createElement('li'))
+            var li =  $(document.createElement('li'))
                 .text(task.get('title')) // set it to text
-                .appendTo(tasksList); // append the text
+                // one line to conditionally add a class is done
+                .addClass(task.get('done')? 'completed-task': '')
+                .appendTo(tasksList) // append the text
+                .click(function() {
+                    // use done property as a result of !task.get('done')
+                    // condition: done; evaluate
+                    task.set('done', !task.get('done'));
+                    // re-render them to change the style class based on whether the task is done or not
+                    task.save().then(renderTasks, displayError);
+                });
+            // create an element called span
+            $(document.createElement('span'))
+                .raty({readOnly: true,
+                    score: (task.get('rating') || 0),
+                    hints: ['crap', 'awful', 'ok', 'nice', 'aswesome']})
+                .appendTo(li);
         });
     }
+
+    // if message is not defined, we'll defalt it to hello
+    function showMessage(message) {
+        message = message || 'Hello';
+        alert(message);
+    }
+
+    //showMessage('World')
 
     //7. when the user submits the new task form
     // catch the submit event
@@ -75,8 +108,12 @@ $(function() {
         var title = titleInput.val();
         var task = new Task();
         task.set('title', title);
-        task.save().then(fetchTasks, displayError).then(function() {
+        task.set('rating', $('#rating').raty('score'));
+        task.save()
+            .then(fetchTasks, displayError)
+            .then(function() {
             titleInput.val('');
+                $('#rating').raty('set', {});
         });
         return false;
     });
@@ -84,6 +121,11 @@ $(function() {
 
     // go and fetch tasks from Parse
     fetchTasks();
+    // enable the rating user interface element
+    $('#rating').raty({rating: true});
+
+    //refetch the tasks every so often to get new tasks created by others
+    window.setInterval(fetchTasks,10000);
 
     /* 6. concept about html
           a. type: searcg / text/ num / email
