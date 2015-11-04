@@ -1,0 +1,43 @@
+<h1>Edit {{contact.fname}} {{contact.lname}}</h1>
+
+<!--
+1. Form's name
+2. turn off its native validation and lets angular take care of the validation process
+3. save() function
+4. Use bootstrap to make form look better
+    a. form-group
+        1) <lable>
+    b. form-control
+        1)ng-model: tells angular i want this input to bound to a particular model property, which is contact.fname
+-->
+<form name="contactForm" novalidate ng-submit="save()">
+    <div class="form-group">
+        <lable for="fnameImp">First Name: </lable>
+        <input type="text" class="form-control" id="fnameImp"
+               name="fnameImp" ng-model="contact.fname"/>
+    </div>
+    <div class="form-group">
+        <lable for="lnameImp">Last Name:</lable>
+        <input type="text" class="form-control" id="lnameImp"
+               name="lnameImp" ng-model="contact.lname"/>
+        <p class="validation-error"
+                ng-if="contactForm.lnameImp.$error.required">Last name is required</p>
+
+    </div>
+    <div class="form-group">
+        <lable for="phoneImp">Phone: </lable>
+        <input type="text" class="form-control" id="phoneImp"
+               name="phoneImp" ng-model="contact.phone"
+               pattern="\d{3}-\d{4}-\d{4}" />
+    </div>
+    <div class="form-group">
+        <lable for="dobImp">Birthdate: </lable>
+        <input type="text" class="form-control" id="dobImp"
+               name="dobImp" ng-model="contact.dob"/>
+    </div>
+    <div class="form-group">
+        <a class="btn btn-deault" ui-sref="list">Cancel</a>
+        <button type="submit" class="btn btn-primary"
+                ng-disabled="contactForm.$invalid">Save</button>
+    </div>
+</form>
