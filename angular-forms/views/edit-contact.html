@@ -9,15 +9,20 @@
         1) <lable>
     b. form-control
         1)ng-model: tells angular i want this input to bound to a particular model property, which is contact.fname
+    c. for & id are requested to match
+5. Pattern
+6. Numeric control: invalid if outside range
 -->
+
+
 <form name="contactForm" novalidate ng-submit="save()">
     <div class="form-group">
-        <lable for="fnameImp">First Name: </lable>
+        <label for="fnameImp">First Name: </label>
         <input type="text" class="form-control" id="fnameImp"
                name="fnameImp" ng-model="contact.fname"/>
     </div>
     <div class="form-group">
-        <lable for="lnameImp">Last Name:</lable>
+        <label for="lnameImp">Last Name:</label>
         <input type="text" class="form-control" id="lnameImp"
                name="lnameImp" ng-model="contact.lname"/>
         <p class="validation-error"
@@ -25,16 +30,36 @@
 
     </div>
     <div class="form-group">
-        <lable for="phoneImp">Phone: </lable>
+        <label for="phoneImp">Phone: </label>
         <input type="text" class="form-control" id="phoneImp"
                name="phoneImp" ng-model="contact.phone"
                pattern="\d{3}-\d{4}-\d{4}" />
     </div>
     <div class="form-group">
-        <lable for="dobImp">Birthdate: </lable>
+        <label for="dobImp">Date of Birth: </label>
         <input type="text" class="form-control" id="dobImp"
-               name="dobImp" ng-model="contact.dob"/>
+               name="dobImp" ng-model="contact.dob" placeholder="date of birth" in-the-past/>
+        <p class="validation-error" ng-if="contactForm.shoeInp.$error.inThePast">
+            Date of birth must be in the apast
+        </p>
     </div>
+
+    <div class="form-group">
+        <label for="shoeInp">Shoe Size:</label>
+        <input type="number" class="form-control" id="shoeInp" name="shoeInp" ng-model="contact.shoeSize"
+               required min="4" max="17"/>
+        <p class="validation-error" ng-if="contactForm.shoeInp.$error.min">
+            Shoe size must be at least 4
+        </p>
+        <p class="validation-error" ng-if="contactForm.shoeInp.$error.max">
+            Shoe size must be less than 18
+        </p>
+        <p class="validation-error" ng-if="contactForm.shoeInp.$error.required">
+            Shoe size is required
+        </p>
+    </div>
+
+
     <div class="form-group">
         <a class="btn btn-deault" ui-sref="list">Cancel</a>
         <button type="submit" class="btn btn-primary"
