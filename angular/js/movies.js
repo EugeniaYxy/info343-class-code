@@ -7,10 +7,10 @@
 angular.module('MoviesApp', ['ui.router'])
 
     .factory('moviesJSON', function($http) {
-        return $http.get('data/movies-2014.min.json')
+        return $http.get('data/movies-2014.min.json');
     })
     // use the state provider to add a number of states
-    .config(function($stateProvider, $ulRouterProvider) {
+    .config(function($stateProvider, $urlRouterProvider) {
             $stateProvider
                 .state('list', {
                     url: '/movies',
@@ -19,15 +19,15 @@ angular.module('MoviesApp', ['ui.router'])
                 })
                 .state('detail', {
                     url: '/movies/:index',
-                    templateUrl: 'views/movies-datail.html',
+                    templateUrl: 'views/movies-detail.html',
                     controller: 'MovieDetailController'
                 });
-            $urlRouterProvider.otherwise('/movies')
+        $urlRouterProvider.otherwise('/movies')
     })
     .controller('MovieDetailController', function($scope, $stateParams,  moviesJSON) {
-        moviesJSON.then(function(result){
+        moviesJSON.then(function(results){
             $scope.movie = results.data[$stateParams.index]
-        })
+        });
     })
 
 

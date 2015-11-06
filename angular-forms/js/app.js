@@ -43,8 +43,8 @@ angular.module('ContactsApp', ['ui.router', 'angular-uuid', 'LocalStorageModule'
             require: 'ngModel',
             link: function(scope, elem, attrs, controller) {
                 controller.$validators.inThePast = function(modelValue) {
-                    var today = new Data();
-                    return (new Date(modelValue <= TODAY))
+                    var today = new Date();
+                    return (new Date(modelValue <= today))
                 }
             }
         }
