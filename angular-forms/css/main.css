@@ -29,9 +29,14 @@ tfoot td {
     font-size: 0.8em;
 }
 
-form .ng-dirty .ng-invalid {
+form .ng-dirty.ng-invalid {
     border: 1px solid #dd0000;
 }
+
+form .ng-dirty.ng-valid {
+    border: 1px solid #00dd00;
+}
+
 
 
 @media (min-width: 768px) {
