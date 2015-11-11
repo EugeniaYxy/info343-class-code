@@ -1,3 +1,49 @@
+/*
+1. var auth = $firebaseAuth(rootRef);
+auth.$onAuth(function(){
+
+})
+
+
+Team Biuld Up
+1. New Repo
+- Public
+- ReadMe
+
+2. Add ppl
+- Setting --> Collaborators
+- Clone it
+
+3. Create new feature branch
+- git branch
+- git branch -remote
+(Switch to a new branch)
+- git checkout -b gitignore
+
+3. Add & Commit
+- git push origin gitignore
+- (Me) Compare and Pull requests / assigned to the rest of the group
+- (Others group): Merge and confirm merge
+
+4. (Other group member)Add & Commit
+- git checkout master
+- git pull origin master
+- git checkout (their branch)
+- git merge master
+- gitk (check all the processes)
+
+5. Delete old version'
+- git branch (freature2)
+- git branch -d (freature2)
+
+6. How to revert the changes you made after you already done the commit
+- git revert HEAD
+
+7.
+
+ */
+
+
 
 angular.module('ChatApp', ['firebase'])
     .constant('firebaseUrl', 'https://info343chatauth.firebaseio.com/')
