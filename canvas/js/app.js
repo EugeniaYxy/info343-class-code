@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
         return {
             // an object of ball that
             ball: {
-                left: 10,
+                left: 35,
                 top: 10,
                 width: 10,
                 height: 10,
@@ -124,10 +124,9 @@ document.addEventListener('DOMContentLoaded', function() {
     gameState = newGameState();
 
     // fetch balls every 16 miliseconds
-    window.setInterval(animate, 16);
+    //window.setInterval(animate, 16);
 
     // ask browser to animate as quickly as possible
-
     requestAnimationFrame(animate);
 
 
